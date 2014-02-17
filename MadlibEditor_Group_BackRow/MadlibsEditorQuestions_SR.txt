@@ -1,0 +1,18 @@
+Madlibs Editor Questions
+
+What should it look like?
+What features does it have?
+How does the program identify nouns, verbs, adjetives etc. Or does
+the user define these?
+Will the program require a profanity filter?
+How will the user interact with the GUI part of the program?
+Such as, will we need to use buttons, drop down lists, etc?
+How will the text file be read and stored?
+Is there anything the programmers writing this program can or
+cannot do/use?
+What is our budget?
+What is our deadline?
+How will the editor save/build these "madlibs" executables?
+Should the program be working with unicode? Acii? or both?
+
+
