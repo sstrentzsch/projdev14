@@ -7,108 +7,34 @@
 #include <iostream>
 #include <string>
 
-#include "SingletonTemplate.h"
 
+#include "SingletonTemplate.h"
 
 
 using namespace std;
 
-
-
-class Singleton
+class Random : public CSingleton<Random>
 {
-private:
-   static bool instanceFlag;
-   static Singleton *single;
-   Singleton() { /* private constructor prevents external construction */ }
-
 public:
-   static Singleton* getInstance();
 
-   // Application specific method(s)
-   void somethingOfInterest();
-      string stringVar;
-
-public:
-   ~Singleton()
+   int getNext ( void )
    {
-      instanceFlag = false;
+      return rand();
    }
 
+   int getRange ( int lo = 0, int hi = RAND_MAX )
+   {
+      int range = (rand() % (abs(hi - lo) + 1)) + min(hi,lo);
+      return range;
+   }
 
+   float getFloat ( void )
+   {
+      float f = (rand() / float(RAND_MAX) );
+      return f;
+   }
+   
 };
-
-
-
-
-
-
-
-
-
-
-
-bool Singleton::instanceFlag = false;
-Singleton* Singleton::single = NULL;
-
-Singleton* Singleton::getInstance()
-{
-   // In a multi-threaded environment, this code is not sufficient and leads to 
-   // (1) an initial race condition; and (2) subsequent inefficiencies.
-
-   if(! instanceFlag)
-   {
-      single = new Singleton();
-      instanceFlag = true;
-      single->stringVar = "A";
-      return single;
-   }
-   else
-   {
-      return single;
-   }
-}
-
-
-
-void Singleton::somethingOfInterest()
-{
-   cout << "Method of the singleton class - Instance (this) = " << (void*) this << endl;
-   cout << "stringVar is " << stringVar << endl;
-   stringVar += stringVar;
-}
-
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-//----------------------------------------------------------------------------------------
-
-class Device : public CSingleton<Device>
-{
-public:
-   friend class CSingleton<Device>;
-
-   friend ostream& operator<< ( ostream& strm, const Device& dev )
-   {
-      strm << dev.myString << ':' << (void*) &dev;
-      return strm;
-   }
-
-   bool open ( ) {
-      cout << "Device Open: this=" << (void*) this << endl;
-   }
-
-   bool close ( ) {
-      cout << "Device Open: this=" << (void*) this << endl;
-   }
-
-private:
-   Device ( ) { }
-
-
-private:
-   string   myString;
-};
-
 
 
 
@@ -120,45 +46,13 @@ private:
 
 int main()
 {
+   Random::getInstance().getNext();
+
+   for (int i = 0; i < 20; i++)
    {
-      Singleton *sc1,*sc2;
-      sc1 = Singleton::getInstance();
-      sc1->somethingOfInterest();
-            // Another thread, another source file - running parallel      
-            sc2 = Singleton::getInstance();
-            sc2->somethingOfInterest();
-
-      sc1->somethingOfInterest();
-            // Another thread, another source file - running parallel      
-            sc2->somethingOfInterest();
-
-
+      cout << Random::getInstance().getRange( -10, 10 ) << endl;
    }
-
-
-
-
-
-      cout << "STOP!!\n";
-
-
-
-
-
-
-
-
-
-
-
-
-   Device& device1 = Device::getInstance();
+//Random::myCleaner.msg();
    
-   cout << "Device 1 is " << device1 << endl;
-
-   cout << "Device::getInstance() is " << Device::getInstance() << endl;
-
-
-
    return 0;
 }
