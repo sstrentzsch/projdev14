@@ -22,10 +22,15 @@ private:                            // Make EVERYTHING in CSingletonKiller priva
   
    CSingletonKiller ( ) {
       std::cout << "CSingleton<T>::CSingletonKiller::CSingletonKiller\n";
+      
+      // Uncommenting this line performs "eager instantiation".  Leaving it commented out
+      // causes on-demand initialization.  There are static object/dynamic memory order of
+      // initialization issues to be considered with *both* mechanisms.
+      //CSingleton<T>::getInstance();
    }
    ~CSingletonKiller ( ) {
-      std::cout << "CSingleton<T>::CSingletonKiller::~CSingletonKiller\n";
       CSingleton<T>::release();
+      std::cout << "CSingleton<T>::CSingletonKiller::~CSingletonKiller\n";
    }
 };
 
@@ -42,7 +47,6 @@ public:
       // Problem with this code in multi-threaded environments.
       if ( myInstance == NULL )
       {
-         // myCSingletonKiller;  //forces CSingletonKiller<T> myCSingletonKiller to be instantiated once (static).
          myInstance = new T;
       }
       return *myInstance;
@@ -51,19 +55,25 @@ public:
 private:
    static void release ( void )
    {
-      delete myInstance;
+      // Ditto problem here with multithreaded environments
+      T* tmp = myInstance;
       myInstance = NULL;
+      delete tmp;
    }
 
-protected:              // protected constructor to allow derived class to construct
+protected:              
+   // protected ctor/dtor allow derived class to construct/destruct
    CSingleton() { 
-      myCSingletonKiller;        // no-op reference, forces instantiation of template CSingleton<T>::myCSingletonKiller
-   }           
-   virtual ~CSingleton(){};
+      // no-op reference forces instantiation of template CSingleton<T>::myCSingletonKiller
+      // A template classes static data members *won't* be instantiated without at least one
+      // reference to the data member.  
+      myCSingletonKiller;        
+   }
+   virtual ~CSingleton() { } 
 
 private:
    static T* myInstance;      // Instance pointer
-   static CSingletonKiller<T> myCSingletonKiller;
+   static CSingletonKiller<T> myCSingletonKiller;  // non-dynamic member object to ensures destruction
 
 private:
    // Especially important that singleton objects NOT be copyable/assignable
@@ -72,11 +82,11 @@ private:
 };
 
 
-
+// declaration of singleton templates static instance pointer
 template<class T>
 T* CSingleton<T>::myInstance = NULL;
 
-
+// declaration of singleton templates static data member that forces cleanup
 template<class T>
 CSingletonKiller<T> CSingleton<T>::myCSingletonKiller;
 

@@ -15,8 +15,14 @@ using namespace std;
 
 class Random : public CSingleton<Random>
 {
-public:
+private:
+   // Private constructor ensures Random can't be directly declared by client,
+   // Parent class must be a friend so its getInstance() can create its child :-)
+   friend class CSingleton<Random>;       
+   Random ( ) { cout << "Random instantiated\n"; }
+   ~Random ( ) { cout << "Random dtor\n"; }
 
+public:
    int getNext ( void )
    {
       return rand();
@@ -47,13 +53,13 @@ public:
 int main()
 {
    cout << "Entering main\n";
-
-   Random::getInstance().getNext();
-
+   //Random r; // this line must not work.
+   
    for (int i = 0; i < 20; i++)
    {
       cout << Random::getInstance().getRange( -10, 10 ) << endl;
    }
+
 
    cout << "Exiting main\n";
    
