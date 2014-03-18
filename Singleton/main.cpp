@@ -46,13 +46,16 @@ public:
 
 int main()
 {
+   cout << "Entering main\n";
+
    Random::getInstance().getNext();
 
    for (int i = 0; i < 20; i++)
    {
       cout << Random::getInstance().getRange( -10, 10 ) << endl;
    }
-//Random::myCleaner.msg();
+
+   cout << "Exiting main\n";
    
    return 0;
 }

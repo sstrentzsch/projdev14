@@ -63,7 +63,6 @@ protected:              // protected constructor to allow derived class to const
 
 private:
    static T* myInstance;      // Instance pointer
-public:
    static CSingletonKiller<T> myCSingletonKiller;
 
 private:
