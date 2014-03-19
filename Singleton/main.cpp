@@ -53,7 +53,7 @@ public:
 int main()
 {
    cout << "Entering main\n";
-   //Random r; // this line must not work.
+   // Random r; // this line must not work.
    
    for (int i = 0; i < 20; i++)
    {
