@@ -7,3 +7,6 @@ Line added AFTER line above is edited, on origin
 
 Line Added to git2/test/test.txt, on branch git2_branch
 
+
+Line Added on branch git1_branch, prior to local merge with git2_branch
+
