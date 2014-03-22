@@ -1,1 +1,3 @@
 This file added on branch git2_branch
+
+Line added to git2_branch after push/pull/merge

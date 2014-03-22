@@ -1,0 +1,5 @@
+Added to git2_branch, after git2_branch had been pushed to origin, pulled, merged and git2_branch pull request deleted.
+
+The git2_branch - locally - still is working copy in desktop/git2
+
+This file added
