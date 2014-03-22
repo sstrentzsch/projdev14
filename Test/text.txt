@@ -3,4 +3,4 @@ Added at git hub on repository:origin
 Added after pushed to origin - origin has been changed
 Added later on master, and the pushed to origin.
 Then this line added on master.
-
+Line added AFTER line above is edited, on origin
