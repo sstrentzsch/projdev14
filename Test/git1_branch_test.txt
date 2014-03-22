@@ -1,0 +1,8 @@
+This file added on branch git1_branch...
+
+At this point, the following branches exist:
+
+   master      - local master
+   origin/master - github master updated with git2_branch
+   git2_branch - branch from origin/master
+   git1_branch - branch from master
