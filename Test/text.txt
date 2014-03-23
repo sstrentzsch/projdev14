@@ -10,3 +10,6 @@ Line Added to git2/test/test.txt, on branch git2_branch
 
 Line Added on branch git1_branch, prior to local merge with git2_branch
 
+*** Line added to GIT1 after adding GIT2 as a remote ***
+
+
